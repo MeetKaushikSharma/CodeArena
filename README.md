@@ -1219,9 +1219,9 @@ This project is licensed under the ISC License - see LICENSE file for details.
 ## Contact & Support
 
 **Project Lead:** Kaushik Sharma  
-**Email:** kaushik@codearena.dev  
+**Email:** kaushiksharmabusiness@gmail.com 
 **GitHub:** [MeetKaushikSharma](https://github.com/MeetKaushikSharma)  
-**Portfolio:** [codearena.dev](https://codearena.dev)
+**Linkedin:** [KaushikSharma](https://www.linkedin.com/in/meetkaushiksharma/)
 
 ### Resources
 
