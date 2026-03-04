@@ -47,10 +47,12 @@ const register = async (req, res) => {
       { expiresIn: 60 * 60 },
     );
 
-    res.cookie("token", token, {
-      maxAge: 60 * 60 * 1000,
-      httpOnly: true,
-    });
+   res.cookie("token", token, {
+   httpOnly: true,
+   secure: true,
+   sameSite: "none",
+   maxAge: 60 * 60 * 1000,
+  });
     res.status(201).json({
       user: buildUserReply(user), // ← full shape
       message: "Registered Successfully",
@@ -78,7 +80,12 @@ const login = async (req, res) => {
       { expiresIn: 60 * 60 },
     );
 
-    res.cookie("token", token, { maxAge: 60 * 60 * 1000, httpOnly: true });
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 60 * 60 * 1000,
+    });
     res.status(200).json({
       user: buildUserReply(user), // ← full shape, not just 4 fields
       message: "Login Successfully",
