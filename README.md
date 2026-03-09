@@ -590,7 +590,7 @@ This project is licensed under the ISC License.
 ## Contact & Links
 
 - **GitHub Repository**: [MeetKaushikSharma/CodeArena](https://github.com/MeetKaushikSharma/CodeArena)
-- **Demo**: [codearena.vercel.app](https://codearena.vercel.app)
+- **Demo**: [codearena]([https://codearena.vercel.app](https://code-arena-army.vercel.app)
 - **Author**: Kaushik Sharma
 
 ---
