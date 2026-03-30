@@ -3,17 +3,8 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-      minLength: 3,
-      maxLength: 20,
-    },
-    lastName: {
-      type: String,
-      minLength: 3,
-      maxLength: 20,
-    },
+    firstName: { type: String, required: true, minLength: 3, maxLength: 20 },
+    lastName: { type: String, default: "" },
     emailId: {
       type: String,
       required: true,
@@ -22,31 +13,26 @@ const userSchema = new Schema(
       lowercase: true,
       immutable: true,
     },
-    age: {
-      type: Number,
-      min: 6,
-      max: 80,
-    },
-    role: {
-      type: String,
-      enum: ["user", "admin"],
-      default: "user",
-    },
+    age: { type: Number, min: 6, max: 80 },
+    role: { type: String, enum: ["user", "admin"], default: "user" },
     problemSolved: {
-      type: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: "problem",
-        },
-      ],
+      type: [{ type: Schema.Types.ObjectId, ref: "problem" }],
       default: [],
     },
-    password: {
+
+    // ← password now optional (OAuth users have no password)
+    password: { type: String, default: "" },
+
+    // ← OAuth fields
+    authProvider: {
       type: String,
-      required: true,
+      enum: ["local", "google", "github"],
+      default: "local",
     },
+    googleId: { type: String, default: "" },
+    githubId: { type: String, default: "" },
+
     profileImage: { type: String, default: "" },
-    lastName: { type: String, default: "" },
     gender: { type: String, default: "" },
     location: { type: String, default: "" },
     birthday: { type: String, default: "" },
@@ -61,11 +47,8 @@ const userSchema = new Schema(
     showRecentAC: { type: Boolean, default: true },
     showHeatmap: { type: Boolean, default: true },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 
 const User = mongoose.model("user", userSchema);
-
 module.exports = User;

@@ -1,65 +1,56 @@
 const express = require("express");
-const authRouter = express.Router();
+const router = express.Router();
+const passport = require("../config/passport");
+const userMiddleware = require("../middleware/userMiddleware");
 const {
   register,
   login,
   logout,
+  oauthCallback,
+  checkAuth,
   adminRegister,
+  deleteProfile,
   updateProfile,
 } = require("../controllers/userAuthent");
-const userMiddleware = require("../middleware/userMiddleware");
-const adminMiddleware = require("../middleware/adminMiddleware");
-const User = require("../models/user");
 
-authRouter.post("/register", register);
-authRouter.post("/login", login);
-authRouter.post("/logout", userMiddleware, logout);
-authRouter.post("/admin/register", adminMiddleware, adminRegister);
+// ── Local auth ─────────────────────────────────────────────────────
+router.post("/register", register);
+router.post("/login", login);
+router.post("/logout", logout);
+router.post("/adminRegister", adminRegister);
+router.delete("/delete", userMiddleware, deleteProfile);
+router.patch("/update", userMiddleware, updateProfile);
+router.get("/check", userMiddleware, checkAuth);
 
-// ── /check: NOW returns all profile fields including profileImage ──────
-// Previously only returned { firstName, emailId, _id, role } which is
-// why profileImage was always empty in Redux on fresh page load.
-authRouter.get("/check", userMiddleware, async (req, res) => {
-  try {
-    // req.result is set by userMiddleware (JWT decoded), but it may not
-    // have all fields. Re-fetch from DB to get the complete document.
-    const user = await User.findById(req.result._id).select("-password");
+// ── Google OAuth ───────────────────────────────────────────────────
+router.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  }),
+);
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: `${process.env.FRONTEND_URL}/login?error=oauth_failed`,
+  }),
+  oauthCallback,
+);
 
-    if (!user) return res.status(401).json({ message: "User not found" });
+// ── GitHub OAuth ───────────────────────────────────────────────────
+router.get(
+  "/auth/github",
+  passport.authenticate("github", { scope: ["user:email"], session: false }),
+);
+router.get(
+  "/auth/github/callback",
+  passport.authenticate("github", {
+    session: false,
+    failureRedirect: `${process.env.FRONTEND_URL}/login?error=oauth_failed`,
+  }),
+  oauthCallback,
+);
 
-    res.status(200).json({
-      user: {
-        _id:          user._id,
-        firstName:    user.firstName,
-        lastName:     user.lastName     || "",
-        emailId:      user.emailId,
-        role:         user.role,
-        age:          user.age          || "",
-        // ↓ these were missing before — causing missing profileImage on load
-        profileImage: user.profileImage || "",
-        gender:       user.gender       || "",
-        location:     user.location     || "",
-        birthday:     user.birthday     || "",
-        website:      user.website      || "",
-        github:       user.github       || "",
-        linkedin:     user.linkedin     || "",
-        twitter:      user.twitter      || "",
-        readme:       user.readme       || "",
-        work:         user.work         || "",
-        education:    user.education    || "",
-        skills:       user.skills       || "",
-        showRecentAC: user.showRecentAC !== false,
-        showHeatmap:  user.showHeatmap  !== false,
-        createdAt:    user.createdAt,
-      },
-      message: "Valid User",
-    });
-  } catch (err) {
-    console.error("checkAuth error:", err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-authRouter.put("/update", userMiddleware, updateProfile);
-
-module.exports = authRouter;
+module.exports = router;

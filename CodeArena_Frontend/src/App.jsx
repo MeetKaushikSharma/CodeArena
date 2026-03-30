@@ -15,6 +15,7 @@ import ProblemListForUpdate from "./components/Problemlistforupdate";
 import UpdateProblem from "./components/Updateproblem";
 import ProfileDashboard from "./pages/ProfileDashboard";
 import Leaderboard from "./pages/Leaderboard";
+import OAuthSuccess from "./pages/OAuthSuccess";
 
 function App() {
   const dispatch = useDispatch();
@@ -116,6 +117,7 @@ function App() {
         />
         <Route path="/admin/update" element={<ProblemListForUpdate />} />
         <Route path="/admin/update/:id" element={<UpdateProblem />} />
+        <Route path="/oauth/success" element={<OAuthSuccess />} />
       </Routes>
     </>
   );

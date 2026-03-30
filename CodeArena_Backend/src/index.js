@@ -10,6 +10,7 @@ const submitRouter = require("./routes/submit");
 const aiRouter = require("./routes/aiChatting");
 const videoRouter = require("./routes/videoCreator");
 const leaderboardRouter = require("./routes/leaderboardRoute");
+const passport   = require("./config/passport");
 const cors = require("cors");
 
 app.use(
@@ -21,6 +22,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(passport.initialize()); 
 
 app.use("/user", authRouter);
 app.use("/problem", problemRouter);
