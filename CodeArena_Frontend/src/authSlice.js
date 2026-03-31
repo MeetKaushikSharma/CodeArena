@@ -37,7 +37,7 @@ export const checkAuth = createAsyncThunk(
     } catch (error) {
       if (error.response?.status === 401) return null;
       return rejectWithValue(
-        error.response?.data?.message || error.message || "Network Error",
+        error.response?.data?.error || error.message || "Network Error",
       );
     }
   },

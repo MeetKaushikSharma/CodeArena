@@ -4,7 +4,7 @@ import Signup from "./pages/Signup";
 import Homepage from "./pages/Homepage";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./authSlice";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import AdminPanel from "./components/AdminPanel";
 import ProblemPage from "./pages/ProblemPage";
 import Admin from "./pages/Admin";
@@ -19,20 +19,21 @@ import OAuthSuccess from "./pages/OAuthSuccess";
 
 function App() {
   const dispatch = useDispatch();
-  const { isAuthenticated, user, loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const [authInitialized, setAuthInitialized] = useState(false); // ← ADD
 
   useEffect(() => {
-    dispatch(checkAuth());
+    dispatch(checkAuth()).finally(() => setAuthInitialized(true)); // ← ADD
   }, [dispatch]);
 
-  if (loading) {
+  // Show spinner ONLY on first load, not on every checkAuth call
+  if (!authInitialized) {               // ← CHANGE (was: if (loading))
     return (
       <div className="min-h-screen flex items-center justify-center">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }
-
   return (
     <>
       <Routes>

@@ -104,16 +104,52 @@ const logout = async (req, res) => {
 // ── OAuth Callback (shared by Google + GitHub) ─────────────────────
 const oauthCallback = async (req, res) => {
   try {
-    const user  = req.user; // set by passport
+    const user  = req.user;
     const token = jwt.sign(
       { _id: user._id, emailId: user.emailId, role: user.role },
       process.env.JWT_KEY,
       { expiresIn: 60 * 60 },
     );
-    res.cookie("token", token, cookieOptions);
-    res.redirect(`${process.env.FRONTEND_URL}/oauth/success`);
+
+    // Store token in Redis with 2 min TTL — single use
+    const code = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    await redisClient.set(`oauth:${code}`, token, { EX: 120 });
+
+    // Pass code in URL — safe (not the JWT itself)
+    res.redirect(`${process.env.FRONTEND_URL}/oauth/success?code=${code}`);
   } catch (err) {
     res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_failed`);
+  }
+};
+
+// ── Exchange code for real session cookie ──────────────────────────
+const exchangeOAuthCode = async (req, res) => {
+  try {
+    const { code } = req.query;
+    if (!code) return res.status(400).json({ error: "Missing code" });
+
+    const token = await redisClient.get(`oauth:${code}`);
+    if (!token) return res.status(400).json({ error: "Invalid or expired code" });
+
+    // Delete immediately — single use only
+    await redisClient.del(`oauth:${code}`);
+
+    // Set proper httpOnly cookie now (same-origin request, no cross-domain issues)
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure:   true,
+      sameSite: "none",
+      maxAge:   60 * 60 * 1000,
+    });
+
+    // Verify token and return user
+    const payload = jwt.verify(token, process.env.JWT_KEY);
+    const user    = await User.findById(payload._id).select("-password");
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.status(200).json({ user: buildUserReply(user) });
+  } catch (err) {
+    res.status(400).json({ error: "Exchange failed: " + err.message });
   }
 };
 
@@ -186,5 +222,5 @@ const updateProfile = async (req, res) => {
 module.exports = {
   register, login, logout,
   oauthCallback, checkAuth,
-  adminRegister, deleteProfile, updateProfile,
+  adminRegister, deleteProfile, updateProfile,exchangeOAuthCode
 };

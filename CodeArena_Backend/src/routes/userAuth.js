@@ -7,6 +7,7 @@ const {
   login,
   logout,
   oauthCallback,
+  exchangeOAuthCode,
   checkAuth,
   adminRegister,
   deleteProfile,
@@ -52,5 +53,6 @@ router.get(
   }),
   oauthCallback,
 );
+router.get("/auth/exchange", exchangeOAuthCode);
 
 module.exports = router;
