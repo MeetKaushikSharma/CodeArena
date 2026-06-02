@@ -419,7 +419,7 @@ export default function Homepage() {
                     className="group grid grid-cols-[48px_1fr] sm:grid-cols-[48px_1fr_120px_100px_80px] gap-4 items-center px-5 py-4 rounded-xl border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.04] hover:border-indigo-500/15 transition-all duration-200"
                     style={{ animationDelay: idx * 20 + "ms" }}
                   >
-                    <span className="text-xs font-mono text-zinc-700 group-hover:text-zinc-500 transition-colors">
+                    <span className="text-xs font-mono text-zinc-200 group-hover:text-zinc-500 transition-colors pt-1">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
 

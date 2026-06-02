@@ -16,7 +16,7 @@ import { updateUserProfile } from "../authSlice";
 const FontLoader = () => {
   useEffect(() => {
     const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap";
+    link.href = "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap";
     link.rel = "stylesheet";
     document.head.appendChild(link);
   }, []);
@@ -67,13 +67,13 @@ function Ring({ value, max, color, size = 88, stroke = 7, label, sublabel }) {
             style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1)", filter: `drop-shadow(0 0 5px ${color})` }} />
         </svg>
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 16, fontWeight: 700, color, lineHeight: 1 }}>{anim}</span>
-          <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, color: "#444466", marginTop: 1 }}>/{max}</span>
+          <span style={{ fontFamily: "'Montserrat'", fontSize: 16, fontWeight: 700, color, lineHeight: 1 }}>{anim}</span>
+          <span style={{ fontFamily: "'Montserrat'", fontSize: 9, color: "#444466", marginTop: 1 }}>/{max}</span>
         </div>
       </div>
       <div style={{ textAlign: "center" }}>
-        <div style={{ fontFamily: "'Syne'", fontSize: 10, fontWeight: 700, color, textTransform: "uppercase", letterSpacing: 1.5 }}>{label}</div>
-        {sublabel && <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, color: "#555577", marginTop: 2 }}>{sublabel}%</div>}
+        <div style={{ fontFamily: "'Montserrat'", fontSize: 10, fontWeight: 700, color, textTransform: "uppercase", letterSpacing: 1.5 }}>{label}</div>
+        {sublabel && <div style={{ fontFamily: "'Montserrat'", fontSize: 9, color: "#555577", marginTop: 2 }}>{sublabel}%</div>}
       </div>
     </div>
   );
@@ -127,7 +127,7 @@ function HeatMap({ submissions }) {
       {/* Month labels */}
       <div style={{ display: "flex", gap: 3, marginBottom: 4, paddingLeft: 2 }}>
         {months.map((m, i) => (
-          <div key={m} style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, color: "#444466", flex: i === 11 ? "0 0 auto" : 1 }}>{m}</div>
+          <div key={m} style={{ fontFamily: "'Montserrat'", fontSize: 9, color: "#444466", flex: i === 11 ? "0 0 auto" : 1 }}>{m}</div>
         ))}
       </div>
       {/* Grid */}
@@ -154,8 +154,8 @@ function HeatMap({ submissions }) {
           { label: "Max Streak",        value: `${maxStreak}d`, color: "#ff4757" },
         ].map(({ label, value, color }) => (
           <div key={label}>
-            <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 15, fontWeight: 700, color }}>{value}</div>
-            <div style={{ fontFamily: "'Inter'", fontSize: 10, color: "#444466", marginTop: 1 }}>{label}</div>
+            <div style={{ fontFamily: "'Montserrat'", fontSize: 15, fontWeight: 700, color }}>{value}</div>
+            <div style={{ fontFamily: "'Montserrat'", fontSize: 10, color: "#444466", marginTop: 1 }}>{label}</div>
           </div>
         ))}
       </div>
@@ -169,8 +169,8 @@ function SkillBar({ label, count, max, color }) {
   return (
     <div style={{ marginBottom: 10 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-        <span style={{ fontFamily: "'Inter'", fontSize: 12, color: "#aaaacc", textTransform: "capitalize" }}>{label}</span>
-        <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 12, color }}>{count}</span>
+        <span style={{ fontFamily: "'Montserrat'", fontSize: 12, color: "#aaaacc", textTransform: "capitalize" }}>{label}</span>
+        <span style={{ fontFamily: "'Montserrat'", fontSize: 12, color }}>{count}</span>
       </div>
       <div style={{ height: 5, background: "#141428", borderRadius: 3, overflow: "hidden" }}>
         <div style={{ height: "100%", width: `${pct}%`, background: color, borderRadius: 3,
@@ -193,7 +193,7 @@ function SocialLink({ href, icon: Icon, label, color }) {
       onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#1e1e30"; e.currentTarget.style.color = "#888aaa"; e.currentTarget.style.background = "#0e0e18"; }}
     >
       <Icon size={14} />
-      <span style={{ fontFamily: "'Inter'", fontSize: 12, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{label}</span>
+      <span style={{ fontFamily: "'Montserrat'", fontSize: 12, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{label}</span>
       <ExternalLink size={11} style={{ marginLeft: "auto", flexShrink: 0 }} />
     </a>
   );
@@ -210,9 +210,9 @@ function StatCard({ label, value, icon: Icon, color, sub }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
         <Icon size={14} color={color} />
       </div>
-      <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 22, fontWeight: 700, color, lineHeight: 1 }}>{value}</div>
-      <div style={{ fontFamily: "'Inter'", fontSize: 11, color: "#555577", marginTop: 4 }}>{label}</div>
-      {sub && <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, color: "#444466", marginTop: 2 }}>{sub}</div>}
+      <div style={{ fontFamily: "'Montserrat'", fontSize: 22, fontWeight: 700, color, lineHeight: 1 }}>{value}</div>
+      <div style={{ fontFamily: "'Montserrat'", fontSize: 11, color: "#555577", marginTop: 4 }}>{label}</div>
+      {sub && <div style={{ fontFamily: "'Montserrat'", fontSize: 10, color: "#444466", marginTop: 2 }}>{sub}</div>}
     </div>
   );
 }
@@ -308,7 +308,7 @@ function EditModal({ user, onClose }) {
 
   const inp = {
     width: "100%", background: "#141428", border: "1px solid #2a2a44", borderRadius: 8,
-    padding: "11px 14px", color: "#e2e8f0", fontFamily: "'Inter'", fontSize: 14,
+    padding: "11px 14px", color: "#e2e8f0", fontFamily: "'Montserrat'", fontSize: 14,
     outline: "none", boxSizing: "border-box",
   };
 
@@ -329,7 +329,7 @@ function EditModal({ user, onClose }) {
                 <ArrowLeft size={16} />
               </button>
             )}
-            <h2 style={{ margin: 0, color: "#e2e8f0", fontSize: 15, fontFamily: "'Syne'", fontWeight: 700 }}>
+            <h2 style={{ margin: 0, color: "#e2e8f0", fontSize: 15, fontFamily: "'Montserrat'", fontWeight: 700 }}>
               {activeField ? config?.label || "Edit" : "Edit Profile"}
             </h2>
           </div>
@@ -338,7 +338,7 @@ function EditModal({ user, onClose }) {
 
         <div style={{ padding: "24px", overflowY: "auto", flex: 1 }}>
           {error && (
-            <div style={{ background: "#2e0a0a", border: "1px solid #ff475733", borderRadius: 8, padding: "10px 14px", marginBottom: 16, color: "#ff4757", fontSize: 12, fontFamily: "'Inter'" }}>
+            <div style={{ background: "#2e0a0a", border: "1px solid #ff475733", borderRadius: 8, padding: "10px 14px", marginBottom: 16, color: "#ff4757", fontSize: 12, fontFamily: "'Montserrat'" }}>
               {error}
             </div>
           )}
@@ -359,12 +359,12 @@ function EditModal({ user, onClose }) {
               )}
               <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 20 }}>
                 <button onClick={() => setActiveField(null)}
-                  style={{ background: "#1a1a2e", color: "#888aaa", border: "1px solid #2a2a44", padding: "9px 18px", borderRadius: 7, cursor: "pointer", fontFamily: "'Inter'", fontSize: 13 }}>
+                  style={{ background: "#1a1a2e", color: "#888aaa", border: "1px solid #2a2a44", padding: "9px 18px", borderRadius: 7, cursor: "pointer", fontFamily: "'Montserrat'", fontSize: 13 }}>
                   Cancel
                 </button>
                 <button disabled={saving} onClick={async () => { await saveToBackend(form); if (!error) setActiveField(null); }}
                   style={{ background: saving ? "#1a1a2e" : "#00ff88", color: saving ? "#555" : "#050508", border: "none",
-                    padding: "9px 20px", borderRadius: 7, cursor: saving ? "not-allowed" : "pointer", fontFamily: "'Syne'", fontWeight: 700, fontSize: 13 }}>
+                    padding: "9px 20px", borderRadius: 7, cursor: saving ? "not-allowed" : "pointer", fontFamily: "'Montserrat'", fontWeight: 700, fontSize: 13 }}>
                   {saving ? "Saving…" : "Save"}
                 </button>
               </div>
@@ -402,8 +402,8 @@ function EditModal({ user, onClose }) {
                 { title: "Experience", desc: "Your background and expertise.", items: fieldsConfig.experience },
               ].map(({ title, desc, items }) => (
                 <div key={title} style={{ marginBottom: 24 }}>
-                  <h4 style={{ margin: "0 0 3px", color: "#e2e8f0", fontSize: 14, fontWeight: 600, fontFamily: "'Syne'" }}>{title}</h4>
-                  <p style={{ margin: "0 0 12px", color: "#555577", fontSize: 11, fontFamily: "'Inter'" }}>{desc}</p>
+                  <h4 style={{ margin: "0 0 3px", color: "#e2e8f0", fontSize: 14, fontWeight: 600, fontFamily: "'Montserrat'" }}>{title}</h4>
+                  <p style={{ margin: "0 0 12px", color: "#555577", fontSize: 11, fontFamily: "'Montserrat'" }}>{desc}</p>
                   <div style={{ background: "#141428", borderRadius: 10, border: "1px solid #2a2a44", overflow: "hidden" }}>
                     {items.map((item, idx) => (
                       <div key={item.key}>
@@ -414,9 +414,9 @@ function EditModal({ user, onClose }) {
                         >
                           <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                             <item.icon size={14} color="#555577" style={{ flexShrink: 0 }} />
-                            <span style={{ fontFamily: "'Inter'", fontSize: 13, color: "#e2e8f0", flexShrink: 0 }}>{item.label}</span>
+                            <span style={{ fontFamily: "'Montserrat'", fontSize: 13, color: "#e2e8f0", flexShrink: 0 }}>{item.label}</span>
                             {form[item.key] && (
-                              <span style={{ fontFamily: "'Inter'", fontSize: 12, color: "#555577", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              <span style={{ fontFamily: "'Montserrat'", fontSize: 12, color: "#555577", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                 {form[item.key]}
                               </span>
                             )}
@@ -432,8 +432,8 @@ function EditModal({ user, onClose }) {
 
               {/* Preferences */}
               <div style={{ marginBottom: 8 }}>
-                <h4 style={{ margin: "0 0 3px", color: "#e2e8f0", fontSize: 14, fontWeight: 600, fontFamily: "'Syne'" }}>Preferences</h4>
-                <p style={{ margin: "0 0 12px", color: "#555577", fontSize: 11, fontFamily: "'Inter'" }}>Control what appears on your profile.</p>
+                <h4 style={{ margin: "0 0 3px", color: "#e2e8f0", fontSize: 14, fontWeight: 600, fontFamily: "'Montserrat'" }}>Preferences</h4>
+                <p style={{ margin: "0 0 12px", color: "#555577", fontSize: 11, fontFamily: "'Montserrat'" }}>Control what appears on your profile.</p>
                 <div style={{ background: "#141428", borderRadius: 10, border: "1px solid #2a2a44", overflow: "hidden" }}>
                   {[
                     { key: "showRecentAC", label: "Show Recent AC Problems" },
@@ -441,9 +441,9 @@ function EditModal({ user, onClose }) {
                   ].map((item, i) => (
                     <div key={item.key}>
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 14px" }}>
-                        <span style={{ fontFamily: "'Inter'", fontSize: 13, color: "#e2e8f0" }}>{item.label}</span>
+                        <span style={{ fontFamily: "'Montserrat'", fontSize: 13, color: "#e2e8f0" }}>{item.label}</span>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, color: "#555577" }}>{form[item.key] ? "On" : "Off"}</span>
+                          <span style={{ fontFamily: "'Montserrat'", fontSize: 11, color: "#555577" }}>{form[item.key] ? "On" : "Off"}</span>
                           <ToggleSwitch isOn={form[item.key]} onToggle={() => handleToggle(item.key)} />
                         </div>
                       </div>
@@ -539,7 +539,7 @@ export default function ProfileDashboard() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#050508", color: "#e2e8f0", fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#050508", color: "#e2e8f0", fontFamily: "'Montserrat', sans-serif" }}>
       <FontLoader />
       <style>{`
         @keyframes spin    { to { transform: rotate(360deg); } }
@@ -558,15 +558,15 @@ export default function ProfileDashboard() {
           <div style={{ width: 28, height: 28, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Code2 size={14} color="#fff" />
           </div>
-          <span style={{ fontFamily: "'Syne'", fontWeight: 700, fontSize: 15 }}>Code<span style={{ color: "#6366f1" }}>Arena</span></span>
+          <span style={{ fontFamily: "'Montserrat'", fontWeight: 700, fontSize: 15 }}>Code<span style={{ color: "#6366f1" }}>Arena</span></span>
         </NavLink>
         <div style={{ display: "flex", gap: 12 }}>
           <button onClick={() => navigate("/leaderboard")}
-            style={{ background: "#ffd16611", border: "1px solid #ffd16633", color: "#ffd166", padding: "7px 14px", borderRadius: 8, cursor: "pointer", fontFamily: "'Syne'", fontSize: 12, fontWeight: 700 }}>
+            style={{ background: "#ffd16611", border: "1px solid #ffd16633", color: "#ffd166", padding: "7px 14px", borderRadius: 8, cursor: "pointer", fontFamily: "'Montserrat'", fontSize: 12, fontWeight: 700 }}>
             🏆 Leaderboard
           </button>
           <button onClick={() => navigate("/")}
-            style={{ background: "#1e1e30", border: "1px solid #2a2a44", color: "#888aaa", padding: "7px 14px", borderRadius: 8, cursor: "pointer", fontFamily: "'Inter'", fontSize: 12 }}>
+            style={{ background: "#1e1e30", border: "1px solid #2a2a44", color: "#888aaa", padding: "7px 14px", borderRadius: 8, cursor: "pointer", fontFamily: "'Montserrat'", fontSize: 12 }}>
             ← Back
           </button>
         </div>
@@ -591,17 +591,17 @@ export default function ProfileDashboard() {
                 {user?.profileImage
                   ? <img src={user.profileImage} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center",
-                      fontFamily: "'Syne'", fontSize: 32, fontWeight: 800, color: "#00ff88" }}>
+                      fontFamily: "'Montserrat'", fontSize: 32, fontWeight: 800, color: "#00ff88" }}>
                       {(user?.firstName?.[0] || "?").toUpperCase()}
                     </div>
                 }
               </div>
 
               {/* Name + tier */}
-              <h1 style={{ fontFamily: "'Syne'", fontSize: 20, fontWeight: 800, margin: "0 0 4px", color: "#e2e8f0" }}>
+              <h1 style={{ fontFamily: "'Montserrat'", fontSize: 20, fontWeight: 800, margin: "0 0 4px", color: "#e2e8f0" }}>
                 {user?.firstName || "Developer"} {user?.lastName || ""}
               </h1>
-              <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 12, color: "#555577", marginBottom: 10 }}>
+              <div style={{ fontFamily: "'Montserrat'", fontSize: 12, color: "#555577", marginBottom: 10 }}>
                 @{user?.emailId?.split("@")[0] || "dev"}
               </div>
 
@@ -609,12 +609,12 @@ export default function ProfileDashboard() {
               <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", borderRadius: 20,
                 background: `${tier.color}15`, border: `1px solid ${tier.color}40`, marginBottom: 14 }}>
                 <span style={{ fontSize: 14 }}>{tier.icon}</span>
-                <span style={{ fontFamily: "'Syne'", fontSize: 11, fontWeight: 800, color: tier.color, letterSpacing: 2 }}>{tier.name}</span>
+                <span style={{ fontFamily: "'Montserrat'", fontSize: 11, fontWeight: 800, color: tier.color, letterSpacing: 2 }}>{tier.name}</span>
               </div>
 
               {/* Bio */}
               {user?.readme && (
-                <p style={{ fontFamily: "'Inter'", fontSize: 13, color: "#888aaa", lineHeight: 1.6, margin: "0 0 14px", textAlign: "left" }}>
+                <p style={{ fontFamily: "'Montserrat'", fontSize: 13, color: "#888aaa", lineHeight: 1.6, margin: "0 0 14px", textAlign: "left" }}>
                   {user.readme}
                 </p>
               )}
@@ -622,26 +622,26 @@ export default function ProfileDashboard() {
               {/* Meta info */}
               <div style={{ display: "flex", flexDirection: "column", gap: 7, marginBottom: 16, textAlign: "left" }}>
                 {user?.location && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter'", fontSize: 13, color: "#888aaa" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Montserrat'", fontSize: 13, color: "#888aaa" }}>
                     <MapPin size={13} color="#555577" /> {user.location}
                   </div>
                 )}
                 {user?.work && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter'", fontSize: 13, color: "#888aaa" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Montserrat'", fontSize: 13, color: "#888aaa" }}>
                     <Briefcase size={13} color="#555577" /> {user.work}
                   </div>
                 )}
                 {user?.education && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter'", fontSize: 13, color: "#888aaa" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Montserrat'", fontSize: 13, color: "#888aaa" }}>
                     <GraduationCap size={13} color="#555577" /> {user.education}
                   </div>
                 )}
                 {user?.birthday && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter'", fontSize: 13, color: "#888aaa" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Montserrat'", fontSize: 13, color: "#888aaa" }}>
                     <Calendar size={13} color="#555577" /> {user.birthday}
                   </div>
                 )}
-                <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Inter'", fontSize: 13, color: "#555577" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Montserrat'", fontSize: 13, color: "#555577" }}>
                   <Star size={13} color="#555577" /> Joined {joinDate}
                 </div>
               </div>
@@ -659,7 +659,7 @@ export default function ProfileDashboard() {
               {/* Edit button */}
               <button onClick={() => setEditOpen(true)} style={{
                 width: "100%", background: "#00ff88", color: "#050508", border: "none",
-                padding: "10px", borderRadius: 9, cursor: "pointer", fontFamily: "'Syne'",
+                padding: "10px", borderRadius: 9, cursor: "pointer", fontFamily: "'Montserrat'",
                 fontSize: 13, fontWeight: 700, boxShadow: "0 0 20px rgba(0,255,136,0.25)",
                 transition: "all 0.2s",
               }}
@@ -673,10 +673,10 @@ export default function ProfileDashboard() {
             {/* Skills card */}
             {user?.skills && (
               <div style={card()}>
-                <div style={{ fontFamily: "'Syne'", fontSize: 11, fontWeight: 700, color: "#555577", textTransform: "uppercase", letterSpacing: 3, marginBottom: 14 }}>Skills</div>
+                <div style={{ fontFamily: "'Montserrat'", fontSize: 11, fontWeight: 700, color: "#555577", textTransform: "uppercase", letterSpacing: 3, marginBottom: 14 }}>Skills</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {user.skills.split(",").map((s) => s.trim()).filter(Boolean).map((skill, i) => (
-                    <span key={i} style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, padding: "4px 10px", borderRadius: 6,
+                    <span key={i} style={{ fontFamily: "'Montserrat'", fontSize: 11, padding: "4px 10px", borderRadius: 6,
                       background: `${topicColors[i % topicColors.length]}15`, border: `1px solid ${topicColors[i % topicColors.length]}30`,
                       color: topicColors[i % topicColors.length] }}>
                       {skill}
@@ -694,7 +694,7 @@ export default function ProfileDashboard() {
               const langColors = { cpp: "#4ecdc4", java: "#f97316", javascript: "#ffd166", python: "#a78bfa", c: "#06b6d4" };
               return (
                 <div style={card()}>
-                  <div style={{ fontFamily: "'Syne'", fontSize: 11, fontWeight: 700, color: "#555577", textTransform: "uppercase", letterSpacing: 3, marginBottom: 14 }}>Languages</div>
+                  <div style={{ fontFamily: "'Montserrat'", fontSize: 11, fontWeight: 700, color: "#555577", textTransform: "uppercase", letterSpacing: 3, marginBottom: 14 }}>Languages</div>
                   {Object.entries(langMap).sort((a,b) => b[1]-a[1]).map(([lang, cnt]) => (
                     <SkillBar key={lang} label={lang} count={cnt} max={maxL} color={langColors[lang] || "#888aaa"} />
                   ))}
@@ -732,7 +732,7 @@ export default function ProfileDashboard() {
                 <div style={{ display: "flex", gap: 4, marginBottom: 18, borderBottom: "1px solid #1e1e30", paddingBottom: 0 }}>
                   {["overview","submissions","topics"].map((tab) => (
                     <button key={tab} onClick={() => setActiveTab(tab)} style={{
-                      fontFamily: "'Syne'", fontSize: 12, fontWeight: 700,
+                      fontFamily: "'Montserrat'", fontSize: 12, fontWeight: 700,
                       background: "transparent", border: "none", cursor: "pointer", padding: "8px 14px",
                       textTransform: "capitalize", color: activeTab === tab ? "#00ff88" : "#555577",
                       borderBottom: activeTab === tab ? "2px solid #00ff88" : "2px solid transparent",
@@ -746,7 +746,7 @@ export default function ProfileDashboard() {
                   <HeatMap submissions={submissions} />
                 )}
                 {activeTab === "overview" && !showHeatmap && (
-                  <div style={{ textAlign: "center", padding: "40px 0", color: "#555577", fontFamily: "'Inter'", fontSize: 13 }}>
+                  <div style={{ textAlign: "center", padding: "40px 0", color: "#555577", fontFamily: "'Montserrat'", fontSize: 13 }}>
                     Heatmap hidden in preferences.
                   </div>
                 )}
@@ -761,7 +761,7 @@ export default function ProfileDashboard() {
                           <thead>
                             <tr>
                               {["Problem","Status","Lang","Date"].map((h) => (
-                                <th key={h} style={{ fontFamily: "'Syne'", fontSize: 10, color: "#444466", textTransform: "uppercase", letterSpacing: 2, padding: "0 10px 10px", textAlign: "left", borderBottom: "1px solid #1e1e30" }}>{h}</th>
+                                <th key={h} style={{ fontFamily: "'Montserrat'", fontSize: 10, color: "#444466", textTransform: "uppercase", letterSpacing: 2, padding: "0 10px 10px", textAlign: "left", borderBottom: "1px solid #1e1e30" }}>{h}</th>
                               ))}
                             </tr>
                           </thead>
@@ -772,19 +772,19 @@ export default function ProfileDashboard() {
                                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
                                 style={{ borderBottom: "1px solid #0a0a14", transition: "background 0.15s" }}
                               >
-                                <td style={{ padding: "11px 10px", fontFamily: "'Inter'", fontSize: 13, color: "#e2e8f0", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                <td style={{ padding: "11px 10px", fontFamily: "'Montserrat'", fontSize: 13, color: "#e2e8f0", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                   {s.problemTitle || "—"}
                                 </td>
                                 <td style={{ padding: "11px 10px" }}>
-                                  <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 4,
+                                  <span style={{ fontFamily: "'Montserrat'", fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 4,
                                     ...(s.status === "accepted" ? { background: "#0a2e1a", color: "#00ff88" }
                                       : s.status === "wrong"   ? { background: "#2e0a0a", color: "#ff4757" }
                                       : { background: "#1e1e30", color: "#888aaa" }) }}>
                                     {s.status?.toUpperCase() || "—"}
                                   </span>
                                 </td>
-                                <td style={{ padding: "11px 10px", fontFamily: "'JetBrains Mono'", fontSize: 12, color: "#4ecdc4" }}>{s.language || "—"}</td>
-                                <td style={{ padding: "11px 10px", fontFamily: "'JetBrains Mono'", fontSize: 11, color: "#444466" }}>
+                                <td style={{ padding: "11px 10px", fontFamily: "'Montserrat'", fontSize: 12, color: "#4ecdc4" }}>{s.language || "—"}</td>
+                                <td style={{ padding: "11px 10px", fontFamily: "'Montserrat'", fontSize: 11, color: "#444466" }}>
                                   {s.createdAt ? new Date(s.createdAt).toLocaleDateString() : "—"}
                                 </td>
                               </tr>
@@ -813,7 +813,7 @@ export default function ProfileDashboard() {
             {/* Recent AC problems */}
             {showRecentAC && solved.length > 0 && (
               <div style={card()}>
-                <div style={{ fontFamily: "'Syne'", fontSize: 11, fontWeight: 700, color: "#555577", textTransform: "uppercase", letterSpacing: 3, marginBottom: 14 }}>
+                <div style={{ fontFamily: "'Montserrat'", fontSize: 11, fontWeight: 700, color: "#555577", textTransform: "uppercase", letterSpacing: 3, marginBottom: 14 }}>
                   Recent AC Problems
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px,1fr))", gap: 10 }}>
@@ -825,14 +825,14 @@ export default function ProfileDashboard() {
                         onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#1e1e30"; e.currentTarget.style.background = "#050508"; }}
                       >
                         <div style={{ minWidth: 0 }}>
-                          <div style={{ fontFamily: "'Inter'", fontSize: 13, fontWeight: 500, color: "#e2e8f0", marginBottom: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <div style={{ fontFamily: "'Montserrat'", fontSize: 13, fontWeight: 500, color: "#e2e8f0", marginBottom: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {p.title}
                           </div>
-                          <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, color: "#444466", textTransform: "capitalize" }}>
+                          <div style={{ fontFamily: "'Montserrat'", fontSize: 10, color: "lightgray", textTransform: "capitalize" }}>
                             {Array.isArray(p.tags) ? p.tags.join(", ") : p.tags}
                           </div>
                         </div>
-                        <span style={{ fontFamily: "'Syne'", fontSize: 9, fontWeight: 700, padding: "3px 7px", borderRadius: 4,
+                        <span style={{ fontFamily: "'Montserrat'", fontSize: 9, fontWeight: 700, padding: "3px 7px", borderRadius: 4,
                           textTransform: "uppercase", letterSpacing: 0.5, flexShrink: 0, marginLeft: 8,
                           ...(p.difficulty === "easy"   ? { background: "#0a2e1a", color: "#00ff88" }
                             : p.difficulty === "medium" ? { background: "#2e2200", color: "#ffd166" }

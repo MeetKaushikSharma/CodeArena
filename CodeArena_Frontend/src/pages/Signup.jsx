@@ -105,7 +105,7 @@ export default function Signup() {
 
       {/* ── Form panel (left on desktop) ── */}
       <div className="flex-1 flex items-center justify-center p-6 relative">
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-sm mt-20">
           {/* Mobile logo */}
           <div className="flex items-center gap-2.5 justify-center mb-8 lg:hidden fu">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
@@ -142,7 +142,7 @@ export default function Signup() {
             {/* First Name */}
             <div className="fu2">
               <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">
-                First Name
+                First & Last Name
               </label>
               <input
                 type="text"
@@ -325,9 +325,9 @@ export default function Signup() {
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-6 fade-up-5">
-            <div className="flex-1 h-px bg-white/[0.06]" />
-            <span className="text-xs text-zinc-700">or continue with</span>
-            <div className="flex-1 h-px bg-white/[0.06]" />
+            <div className="flex-1 h-px bg-white/[0.10]" />
+            <span className="text-xs text-white-700">or continue with</span>
+            <div className="flex-1 h-px bg-white/[0.10]" />
           </div>
 
           {/* OAuth buttons */}
@@ -336,11 +336,11 @@ export default function Signup() {
           </div>
 
           {/* Login link */}
-          <p className="text-center text-sm text-zinc-600 fu7">
+          <p className="text-center text-sm text-zinc-600 fu7 mt-2">
             Already have an account?{" "}
             <NavLink
               to="/login"
-              className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
+              className="text-indigo-300 hover:text-indigo-300 font-semibold transition-colors"
             >
               Sign in
             </NavLink>
@@ -349,7 +349,7 @@ export default function Signup() {
       </div>
 
       {/* ── Right decorative panel (desktop) ── */}
-      <div className="hidden lg:flex flex-col w-[42%] relative border-l border-white/[0.04] p-12 justify-between bg-white/[0.008]">
+      <div className="hidden lg:flex flex-col w-[42%] relative border-l border-white/[0.04] p-12 justify-between bg-white/[0.008] mr-5 mb-18">
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2.5 self-end">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
@@ -361,8 +361,8 @@ export default function Signup() {
         </NavLink>
 
         {/* Center */}
-        <div>
-          <h2 className="text-3xl font-bold text-white leading-tight mb-4">
+        <div className="mb-40">
+          <h2 className="text-3xl font-bold text-white leading-tight ">
             Everything you need
             <br />
             to{" "}
@@ -378,7 +378,7 @@ export default function Signup() {
           {/* Feature list */}
           <div className="space-y-3">
             {[
-              { emoji: "⚡", text: "Run code instantly with Judge0" },
+              { emoji: "⚡", text: "Run code instantly with Judge1" },
               { emoji: "🤖", text: "AI-powered doubt solving chat" },
               { emoji: "🎬", text: "Video editorials for every problem" },
               { emoji: "📊", text: "Track your progress and streaks" },
@@ -393,28 +393,29 @@ export default function Signup() {
             ))}
           </div>
         </div>
-
-        {/* Bottom user count */}
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          {/* Avatar stack */}
-          <div className="flex -space-x-2">
-            {["#6366f1", "#8b5cf6", "#06b6d4", "#10b981"].map((c, i) => (
-              <div
-                key={i}
-                className="w-7 h-7 rounded-full border-2 border-[#0b0b10] flex items-center justify-center text-[10px] font-bold text-white"
-                style={{ backgroundColor: c }}
-              >
-                {["A", "B", "C", "D"][i]}
-              </div>
-            ))}
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-white">
-              Join 50,000+ developers
-            </p>
-            <p className="text-[10px] text-zinc-600">
-              already improving their skills
-            </p>
+        <div className="absolute bottom-30">
+          {/* Bottom user count */}
+          <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] ">
+            {/* Avatar stack */}
+            <div className="flex -space-x-2">
+              {["#6366f1", "#8b5cf6", "#06b6d4", "#10b981"].map((c, i) => (
+                <div
+                  key={i}
+                  className="w-7 h-7 rounded-full border-2 border-[#0b0b10] flex items-center justify-center text-[10px] font-bold text-white"
+                  style={{ backgroundColor: c }}
+                >
+                  {["A", "B", "C", "D"][i]}
+                </div>
+              ))}
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-white">
+                Join 50,000+ developers
+              </p>
+              <p className="text-[10px] text-zinc-600">
+                already improving their skills
+              </p>
+            </div>
           </div>
         </div>
       </div>

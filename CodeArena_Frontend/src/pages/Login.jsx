@@ -131,7 +131,7 @@ export default function Login() {
       `}</style>
 
       {/* ── Left decorative panel (desktop) ── */}
-      <div className="hidden lg:flex flex-col w-[45%] relative border-r border-white/[0.04] p-12 justify-between">
+      <div className="hidden lg:flex flex-col w-[45%] relative border-r border-white/[0.04] p-12 justify-between ml-10 mb-10">
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
@@ -181,16 +181,16 @@ export default function Login() {
 
         {/* Bottom quote */}
         <div className="border border-white/[0.06] rounded-xl p-4 bg-white/[0.02]">
-          <p className="text-xs text-zinc-500 leading-relaxed italic">
+          <p className="text-xs text-zinc-200 leading-relaxed italic">
             "The only way to learn a new programming language is by writing
             programs in it."
           </p>
-          <p className="text-xs text-zinc-700 mt-2">— Dennis Ritchie</p>
+          <p className="text-xs text-zinc-500 mt-2">— Dennis Ritchie</p>
         </div>
       </div>
 
       {/* ── Right: form panel ── */}
-      <div className="flex-1 flex items-center justify-center p-6 relative">
+      <div className="flex-1 flex items-center justify-center p-6 relative mt-20">
         <div className="w-full max-w-sm">
           {/* Mobile logo */}
           <div className="flex items-center gap-2.5 justify-center mb-10 lg:hidden fade-up">
@@ -314,9 +314,9 @@ export default function Login() {
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-6 fade-up-5">
-            <div className="flex-1 h-px bg-white/[0.06]" />
-            <span className="text-xs text-zinc-700">or continue with</span>
-            <div className="flex-1 h-px bg-white/[0.06]" />
+            <div className="flex-1 h-px bg-white/[0.10]" />
+            <span className="text-xs text-white-700">or continue with</span>
+            <div className="flex-1 h-px bg-white/[0.10]" />
           </div>
 
           {/* OAuth buttons */}

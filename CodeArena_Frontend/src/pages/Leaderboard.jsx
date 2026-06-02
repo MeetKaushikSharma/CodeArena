@@ -8,7 +8,7 @@ const FontLoader = () => {
   useEffect(() => {
     const link = document.createElement("link");
     link.href =
-      "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap";
+      "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap";
     link.rel = "stylesheet";
     document.head.appendChild(link);
   }, []);
@@ -51,7 +51,7 @@ function PodiumCard({ user, rank, delay }) {
             fontSize: 24,
             fontWeight: 800,
             color: "#050508",
-            fontFamily: "'Syne', sans-serif",
+            fontFamily: "'Montserrat', sans-serif",
             boxShadow: `0 0 30px ${glows[rank - 1]}`,
             border: `2px solid ${colors[rank - 1]}`,
           }}
@@ -60,7 +60,7 @@ function PodiumCard({ user, rank, delay }) {
         </div>
         <div
           style={{
-            fontFamily: "'Syne', sans-serif",
+            fontFamily: "'Montserrat', sans-serif",
             fontSize: 14,
             fontWeight: 700,
             color: "#e2e8f0",
@@ -70,7 +70,7 @@ function PodiumCard({ user, rank, delay }) {
         </div>
         <div
           style={{
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "'Montserrat', monospace",
             fontSize: 11,
             color: "#555577",
           }}
@@ -98,7 +98,7 @@ function PodiumCard({ user, rank, delay }) {
         <span style={{ fontSize: 28 }}>{medals[rank - 1]}</span>
         <span
           style={{
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "'Montserrat', monospace",
             fontSize: 28,
             fontWeight: 700,
             color: colors[rank - 1],
@@ -121,7 +121,7 @@ function RankBadge({ rank }) {
   return (
     <span
       style={{
-        fontFamily: "'JetBrains Mono', monospace",
+        fontFamily: "'Montserrat', monospace",
         fontSize: 14,
         fontWeight: 700,
         color: rank <= 10 ? "#a78bfa" : "#555577",
@@ -164,7 +164,7 @@ function Tier({ solved }) {
   return (
     <span
       style={{
-        fontFamily: "'Syne', sans-serif",
+        fontFamily: "'Montserrat', sans-serif",
         fontSize: 10,
         fontWeight: 700,
         letterSpacing: 1.5,
@@ -209,7 +209,7 @@ function ScoreBar({ value, max, color = "#00ff88" }) {
       </div>
       <span
         style={{
-          fontFamily: "'JetBrains Mono', monospace",
+          fontFamily: "'Montserrat', monospace",
           fontSize: 12,
           color,
           minWidth: 24,
@@ -313,7 +313,7 @@ export default function Leaderboard() {
           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
           <p
             style={{
-              fontFamily: "'JetBrains Mono', monospace",
+              fontFamily: "'Montserrat', monospace",
               color: "#555577",
               fontSize: 13,
             }}
@@ -331,7 +331,7 @@ export default function Leaderboard() {
         minHeight: "100vh",
         background: "#050508",
         color: "#e2e8f0",
-        fontFamily: "'Syne', sans-serif",
+        fontFamily: "'Montserrat', sans-serif",
       }}
     >
       <FontLoader />
@@ -399,7 +399,7 @@ export default function Leaderboard() {
           <div>
             <div
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Montserrat', monospace",
                 fontSize: 11,
                 color: "#555577",
                 letterSpacing: 4,
@@ -411,7 +411,7 @@ export default function Leaderboard() {
             </div>
             <h1
               style={{
-                fontFamily: "'Syne', sans-serif",
+                fontFamily: "'Montserrat', sans-serif",
                 fontSize: 40,
                 fontWeight: 800,
                 margin: 0,
@@ -436,7 +436,7 @@ export default function Leaderboard() {
               >
                 <div
                   style={{
-                    fontFamily: "'JetBrains Mono', monospace",
+                    fontFamily: "'Montserrat', monospace",
                     fontSize: 11,
                     color: "#555577",
                     marginBottom: 4,
@@ -446,7 +446,7 @@ export default function Leaderboard() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'JetBrains Mono', monospace",
+                    fontFamily: "'Montserrat', monospace",
                     fontSize: 24,
                     fontWeight: 700,
                     color: "#ffd166",
@@ -459,7 +459,7 @@ export default function Leaderboard() {
             <NavLink
               to="/profile"
               style={{
-                fontFamily: "'Syne', sans-serif",
+                fontFamily: "'Montserrat', sans-serif",
                 fontSize: 13,
                 fontWeight: 700,
                 color: "#00ff88",
@@ -531,7 +531,7 @@ export default function Leaderboard() {
                 borderRadius: 10,
                 padding: "10px 16px",
                 color: "#e2e8f0",
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Montserrat', monospace",
                 fontSize: 13,
                 outline: "none",
               }}
@@ -549,7 +549,7 @@ export default function Leaderboard() {
                 key={f}
                 onClick={() => setFilter(f)}
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "'Montserrat', sans-serif",
                   fontSize: 12,
                   fontWeight: 700,
                   padding: "10px 16px",
@@ -605,7 +605,7 @@ export default function Leaderboard() {
             >
               <div
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "'Montserrat', sans-serif",
                   fontSize: 11,
                   color: "#555577",
                   textTransform: "uppercase",
@@ -617,7 +617,7 @@ export default function Leaderboard() {
               </div>
               <div
                 style={{
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "'Montserrat', monospace",
                   fontSize: 24,
                   fontWeight: 700,
                   color,
@@ -654,7 +654,7 @@ export default function Leaderboard() {
                 <div
                   key={h}
                   style={{
-                    fontFamily: "'Syne', sans-serif",
+                    fontFamily: "'Montserrat', sans-serif",
                     fontSize: 11,
                     fontWeight: 700,
                     color: "#444466",
@@ -675,7 +675,7 @@ export default function Leaderboard() {
                 padding: "60px 24px",
                 textAlign: "center",
                 color: "#555577",
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Montserrat', monospace",
                 fontSize: 13,
               }}
             >
@@ -727,7 +727,7 @@ export default function Leaderboard() {
                         fontSize: 14,
                         fontWeight: 800,
                         color: isTop3 ? "#050508" : "#888aaa",
-                        fontFamily: "'Syne', sans-serif",
+                        fontFamily: "'Montserrat', sans-serif",
                         boxShadow: isTop3
                           ? `0 0 16px ${["rgba(255,209,102,0.4)", "rgba(192,192,208,0.3)", "rgba(205,127,50,0.3)"][u.rank - 1]}`
                           : "none",
@@ -738,7 +738,7 @@ export default function Leaderboard() {
                     <div>
                       <div
                         style={{
-                          fontFamily: "'Syne', sans-serif",
+                          fontFamily: "'Montserrat', sans-serif",
                           fontSize: 14,
                           fontWeight: 700,
                           color: isMe ? "#ffd166" : "#e2e8f0",
@@ -751,7 +751,7 @@ export default function Leaderboard() {
                         {isMe && (
                           <span
                             style={{
-                              fontFamily: "'JetBrains Mono', monospace",
+                              fontFamily: "'Montserrat', monospace",
                               fontSize: 10,
                               color: "#ffd166",
                               background: "#2e2200",
@@ -765,9 +765,9 @@ export default function Leaderboard() {
                       </div>
                       <div
                         style={{
-                          fontFamily: "'JetBrains Mono', monospace",
+                          fontFamily: "'Montserrat', monospace",
                           fontSize: 11,
-                          color: "#444466",
+                          color: "grey",
                         }}
                       >
                         {u.emailId?.split("@")[0]}
@@ -801,7 +801,7 @@ export default function Leaderboard() {
                   {/* Solved count */}
                   <div
                     style={{
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "'Montserrat', monospace",
                       fontSize: 16,
                       fontWeight: 700,
                       color: "#e2e8f0",
@@ -814,9 +814,11 @@ export default function Leaderboard() {
                   {/* Score */}
                   <div
                     style={{
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "'Montserrat', monospace",
                       fontSize: 13,
-                      color: "#555577",
+                      fontWeight:"bold",
+                      color: "grey",
+                      paddingBottom:2
                     }}
                   >
                     {Math.round(
@@ -847,7 +849,7 @@ export default function Leaderboard() {
           >
             <div
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Montserrat', monospace",
                 fontSize: 14,
                 fontWeight: 700,
                 color: "#ffd166",
@@ -868,7 +870,7 @@ export default function Leaderboard() {
                   fontSize: 14,
                   fontWeight: 800,
                   color: "#050508",
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "'Montserrat', sans-serif",
                 }}
               >
                 {(currentUser?.firstName?.[0] || "?").toUpperCase()}
@@ -876,7 +878,7 @@ export default function Leaderboard() {
               <div>
                 <div
                   style={{
-                    fontFamily: "'Syne', sans-serif",
+                    fontFamily: "'Montserrat', sans-serif",
                     fontSize: 14,
                     fontWeight: 700,
                     color: "#ffd166",
@@ -888,7 +890,7 @@ export default function Leaderboard() {
                   {currentUser?.firstName}{" "}
                   <span
                     style={{
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "'Montserrat', monospace",
                       fontSize: 10,
                       background: "#2e2200",
                       padding: "1px 6px",
@@ -900,7 +902,7 @@ export default function Leaderboard() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'JetBrains Mono', monospace",
+                    fontFamily: "'Montserrat', monospace",
                     fontSize: 11,
                     color: "#444466",
                   }}
@@ -927,7 +929,7 @@ export default function Leaderboard() {
             </div>
             <div
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Montserrat', monospace",
                 fontSize: 16,
                 fontWeight: 700,
                 color: "#ffd166",
@@ -937,7 +939,7 @@ export default function Leaderboard() {
             </div>
             <div
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Montserrat', monospace",
                 fontSize: 11,
                 color: "#555577",
               }}
@@ -957,7 +959,7 @@ export default function Leaderboard() {
         >
           <span
             style={{
-              fontFamily: "'JetBrains Mono', monospace",
+              fontFamily: "'Montserrat', monospace",
               fontSize: 11,
               color: "#333355",
             }}
