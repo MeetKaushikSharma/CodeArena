@@ -7,6 +7,9 @@ const User = require("../models/user");
  */
 const getLeaderboard = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 100;
+    
     // Populate problemSolved to get difficulty info
     const users = await User.find({})
       .populate("problemSolved", "difficulty")
@@ -34,10 +37,20 @@ const getLeaderboard = async (req, res) => {
         };
       })
       .filter((u) => u.solved > 0)              // only show users who solved something
-      .sort((a, b) => b.score - a.score || b.solved - a.solved) // sort by score, then solved
-      .slice(0, 100);                            // top 100
+      .sort((a, b) => b.score - a.score || b.solved - a.solved); // sort by score, then solved
 
-    res.status(200).json(ranked);
+    const total = ranked.length;
+    const paginated = ranked.slice((page - 1) * limit, page * limit);
+
+    res.status(200).json({
+      data: paginated,
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit)
+      }
+    });
   } catch (err) {
     console.error("getLeaderboard error:", err);
     res.status(500).json({ error: "Internal server error" });

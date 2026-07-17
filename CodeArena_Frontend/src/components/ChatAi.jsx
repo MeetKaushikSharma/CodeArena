@@ -225,7 +225,6 @@ function ChatAi({ problem, messages, setMessages }) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="chat-input-box">
               <textarea
-                ref={inputRef}
                 rows={1}
                 placeholder="Ask for a hint, approach, or complexity..."
                 className="chat-textarea"
@@ -233,6 +232,10 @@ function ChatAi({ problem, messages, setMessages }) {
                 onInput={(e) => { e.target.style.height = "auto"; e.target.style.height = Math.min(e.target.scrollHeight, 120) + "px"; }}
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmit(onSubmit)(); } }}
                 {...register("message", { required: true, minLength: 2 })}
+                ref={(e) => {
+                  register("message").ref(e);
+                  inputRef.current = e;
+                }}
               />
               <button
                 type="submit"

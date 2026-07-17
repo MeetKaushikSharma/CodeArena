@@ -29,7 +29,7 @@ export default function OAuthSuccess() {
         }
       })
       .catch(() => navigate("/login?error=oauth_failed", { replace: true }));
-  }, []); // ← empty deps, runs once, no remount issues
+  }, [dispatch, navigate]); // ← empty deps, runs once, no remount issues
 
   return (
     <div className="min-h-screen bg-[#0b0b10] flex items-center justify-center">

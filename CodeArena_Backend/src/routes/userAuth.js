@@ -18,9 +18,9 @@ const {
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.post("/adminRegister", adminRegister);
+router.post("/adminRegister", require("../middleware/adminMiddleware"), adminRegister);
 router.delete("/delete", userMiddleware, deleteProfile);
-router.patch("/update", userMiddleware, updateProfile);
+router.post("/update", userMiddleware, updateProfile);
 router.get("/check", userMiddleware, checkAuth);
 
 // ── Google OAuth ───────────────────────────────────────────────────

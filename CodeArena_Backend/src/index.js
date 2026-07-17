@@ -20,7 +20,7 @@ app.use(
   }),
 );
 
-app.use(express.json());
+app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
 app.use(passport.initialize()); 
 
@@ -30,6 +30,12 @@ app.use("/submission", submitRouter);
 app.use("/ai", aiRouter);
 app.use("/video", videoRouter);
 app.use("/leaderboard", leaderboardRouter);
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error("Global Error:", err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
 const IntializeConnection = async () => {
   try {

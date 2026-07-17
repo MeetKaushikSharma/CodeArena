@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
+    // Port 5000 is used for local development to match the backend CORS config
     port: 5000,
   },
 });

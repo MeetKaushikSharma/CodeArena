@@ -391,7 +391,22 @@ export default function Homepage() {
             <span className="text-right">Status</span>
           </div>
 
-          {filtered.length === 0 ? (
+          {problems.length === 0 && !pageReady ? (
+            <div className="space-y-2">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex items-center gap-4 px-5 py-4 rounded-xl border border-white/[0.04] bg-white/[0.02] animate-pulse">
+                  <div className="w-6 h-4 bg-white/[0.05] rounded" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-white/[0.05] rounded w-1/3" />
+                    <div className="h-3 bg-white/[0.05] rounded w-1/4 sm:hidden" />
+                  </div>
+                  <div className="hidden sm:block w-16 h-6 bg-white/[0.05] rounded-lg" />
+                  <div className="hidden sm:block w-16 h-6 bg-white/[0.05] rounded-lg" />
+                  <div className="hidden sm:block w-12 h-4 bg-white/[0.05] rounded" />
+                </div>
+              ))}
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-24 gap-3">
               <div className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/[0.07] flex items-center justify-center">
                 <BookOpen size={20} className="text-zinc-600" />
@@ -416,7 +431,7 @@ export default function Homepage() {
                   <NavLink
                     key={problem._id}
                     to={"/problem/" + problem._id}
-                    className="group grid grid-cols-[48px_1fr] sm:grid-cols-[48px_1fr_120px_100px_80px] gap-4 items-center px-5 py-4 rounded-xl border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.04] hover:border-indigo-500/15 transition-all duration-200"
+                    className="group grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr_120px_100px_80px] gap-3 sm:gap-4 items-center px-4 py-5 sm:px-5 sm:py-4 rounded-xl border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.04] hover:border-indigo-500/15 transition-all duration-200 active:scale-[0.99] active:bg-white/[0.06] touch-manipulation"
                     style={{ animationDelay: idx * 20 + "ms" }}
                   >
                     <span className="text-xs font-mono text-zinc-200 group-hover:text-zinc-500 transition-colors pt-1">

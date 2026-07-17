@@ -221,7 +221,11 @@ export default function ProblemPage() {
     const saved   = loadCode(problemId, selectedLanguage);
     const starter = getCode(problem.startCode.find((sc) => sc.language === selectedLanguage));
     setCode(saved ?? starter ?? "// No starter code for this language");
-  }, [selectedLanguage, problem]);
+  }, [selectedLanguage, problem, problemId]);
+
+  useEffect(() => {
+    return () => clearTimeout(saveTimer.current);
+  }, []);
 
   // ── Debounced auto-save ───────────────────────────────────────
   const handleCodeChange = (value) => {
@@ -333,10 +337,10 @@ export default function ProblemPage() {
       </header>
 
       {/* Resizable body */}
-      <div ref={containerRef} className="flex-1 flex overflow-hidden">
+      <div ref={containerRef} className="flex-1 flex flex-col md:flex-row overflow-hidden">
 
         {/* LEFT PANEL */}
-        <div className="flex flex-col overflow-hidden bg-[#0d0d14]" style={{ width: pct + "%" }}>
+        <div className="flex flex-col overflow-hidden bg-[#0d0d14] w-full h-[50vh] md:h-full md:w-[var(--desktop-width)] flex-shrink-0" style={{ '--desktop-width': pct + "%" }}>
           <TabBar tabs={LEFT_TABS} active={activeLeftTab} onChange={setActiveLeftTab} />
 
           <div className="flex-1 overflow-hidden relative">
@@ -416,7 +420,7 @@ export default function ProblemPage() {
 
         {/* DRAG HANDLE */}
         <div onMouseDown={onMouseDown}
-          className="flex-shrink-0 w-[5px] bg-transparent hover:bg-indigo-500/30 active:bg-indigo-500/50 cursor-col-resize transition-colors flex items-center justify-center group relative z-20">
+          className="hidden md:flex flex-shrink-0 w-[5px] bg-transparent hover:bg-indigo-500/30 active:bg-indigo-500/50 cursor-col-resize transition-colors items-center justify-center group relative z-20">
           <div className="w-[3px] h-8 rounded-full bg-white/[0.08] group-hover:bg-indigo-400/60 transition-colors" />
         </div>
 
@@ -461,6 +465,7 @@ export default function ProblemPage() {
               <div className="flex-1 overflow-hidden">
                 <Editor
                   height="100%"
+                  loading={<div className="flex h-full items-center justify-center text-zinc-500"><span className="loading loading-spinner loading-md text-indigo-500"></span></div>}
                   language={langMeta.monaco}
                   value={code}
                   onChange={handleCodeChange}

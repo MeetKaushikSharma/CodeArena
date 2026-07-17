@@ -66,7 +66,7 @@ const AdminVideo = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
+        <table className="table table-zebra w-full min-w-[600px]">
           <thead>
             <tr>
               <th className="w-1/12">#</th>

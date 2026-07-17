@@ -1,39 +1,14 @@
 const redisClient = require("../config/redis");
-const User        = require("../models/user");
-const validate    = require("../utils/validator");
-const bcrypt      = require("bcrypt");
-const jwt         = require("jsonwebtoken");
-
-const buildUserReply = (user) => ({
-  _id:          user._id,
-  firstName:    user.firstName,
-  lastName:     user.lastName     || "",
-  emailId:      user.emailId,
-  role:         user.role,
-  age:          user.age          || "",
-  profileImage: user.profileImage || "",
-  gender:       user.gender       || "",
-  location:     user.location     || "",
-  birthday:     user.birthday     || "",
-  website:      user.website      || "",
-  github:       user.github       || "",
-  linkedin:     user.linkedin     || "",
-  twitter:      user.twitter      || "",
-  readme:       user.readme       || "",
-  work:         user.work         || "",
-  education:    user.education    || "",
-  skills:       user.skills       || "",
-  showRecentAC: user.showRecentAC !== false,
-  showHeatmap:  user.showHeatmap  !== false,
-  authProvider: user.authProvider || "local",
-  createdAt:    user.createdAt,
-});
+const User = require("../models/user");
+const validate = require("../utils/validator");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const cookieOptions = {
   httpOnly: true,
-  secure:   true,
+  secure: true,
   sameSite: "none",
-  maxAge:   60 * 60 * 1000,
+  maxAge: 60 * 60 * 1000,
 };
 
 // ── Register (local) ───────────────────────────────────────────────
@@ -41,18 +16,19 @@ const register = async (req, res) => {
   try {
     validate(req.body);
     const { emailId, password } = req.body;
-    req.body.password    = await bcrypt.hash(password, 10);
-    req.body.role        = "user";
+    req.body.password = await bcrypt.hash(password, 10);
+    req.body.role = "user";
     req.body.authProvider = "local";
 
-    const user  = await User.create(req.body);
+    const user = await User.create(req.body);
     const token = jwt.sign(
       { _id: user._id, emailId, role: "user" },
       process.env.JWT_KEY,
       { expiresIn: 60 * 60 },
     );
     res.cookie("token", token, cookieOptions);
-    res.status(201).json({ user: buildUserReply(user), message: "Registered Successfully" });
+    const { password: _password, ...safeUser } = user.toObject();
+    res.status(201).json({ user: safeUser, message: "Registered Successfully" });
   } catch (err) {
     res.status(400).json({ error: "Error: " + err.message });
   }
@@ -69,7 +45,9 @@ const login = async (req, res) => {
 
     // Block OAuth users from password login
     if (user.authProvider !== "local") {
-      throw new Error(`This account uses ${user.authProvider} sign-in. Please use that instead.`);
+      throw new Error(
+        `This account uses ${user.authProvider} sign-in. Please use that instead.`,
+      );
     }
 
     const match = await bcrypt.compare(password, user.password);
@@ -81,7 +59,8 @@ const login = async (req, res) => {
       { expiresIn: 60 * 60 },
     );
     res.cookie("token", token, cookieOptions);
-    res.status(200).json({ user: buildUserReply(user), message: "Login Successfully" });
+    const { password: _password, ...safeUser } = user.toObject();
+    res.status(200).json({ user: safeUser, message: "Login Successfully" });
   } catch (err) {
     res.status(401).json({ error: "Error: " + err.message });
   }
@@ -91,10 +70,14 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
   try {
     const { token } = req.cookies;
-    const payload   = jwt.decode(token);
-    await redisClient.set(`token:${token}`, "Blocked");
-    await redisClient.expireAt(`token:${token}`, payload.exp);
-    res.cookie("token", null, { expires: new Date(Date.now()) });
+    if (token) {
+      const payload = jwt.decode(token);
+      if (payload && payload.exp) {
+        await redisClient.set(`token:${token}`, "Blocked");
+        await redisClient.expireAt(`token:${token}`, payload.exp);
+      }
+      res.clearCookie("token", cookieOptions);
+    }
     res.status(200).json({ message: "Logged Out Successfully" });
   } catch (err) {
     res.status(503).json({ error: "Error: " + err.message });
@@ -104,7 +87,7 @@ const logout = async (req, res) => {
 // ── OAuth Callback (shared by Google + GitHub) ─────────────────────
 const oauthCallback = async (req, res) => {
   try {
-    const user  = req.user;
+    const user = req.user;
     const token = jwt.sign(
       { _id: user._id, emailId: user.emailId, role: user.role },
       process.env.JWT_KEY,
@@ -129,7 +112,8 @@ const exchangeOAuthCode = async (req, res) => {
     if (!code) return res.status(400).json({ error: "Missing code" });
 
     const token = await redisClient.get(`oauth:${code}`);
-    if (!token) return res.status(400).json({ error: "Invalid or expired code" });
+    if (!token)
+      return res.status(400).json({ error: "Invalid or expired code" });
 
     // Delete immediately — single use only
     await redisClient.del(`oauth:${code}`);
@@ -137,17 +121,17 @@ const exchangeOAuthCode = async (req, res) => {
     // Set proper httpOnly cookie now (same-origin request, no cross-domain issues)
     res.cookie("token", token, {
       httpOnly: true,
-      secure:   true,
+      secure: true,
       sameSite: "none",
-      maxAge:   60 * 60 * 1000,
+      maxAge: 60 * 60 * 1000,
     });
 
     // Verify token and return user
     const payload = jwt.verify(token, process.env.JWT_KEY);
-    const user    = await User.findById(payload._id).select("-password");
+    const user = await User.findById(payload._id).select("-password");
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    res.status(200).json({ user: buildUserReply(user) });
+    res.status(200).json({ user });
   } catch (err) {
     res.status(400).json({ error: "Exchange failed: " + err.message });
   }
@@ -158,7 +142,7 @@ const checkAuth = async (req, res) => {
   try {
     const user = await User.findById(req.result._id).select("-password");
     if (!user) return res.status(401).json({ error: "User not found" });
-    res.status(200).json({ user: buildUserReply(user) });
+    res.status(200).json({ user });
   } catch (err) {
     res.status(401).json({ error: "Unauthorized" });
   }
@@ -170,13 +154,14 @@ const adminRegister = async (req, res) => {
     validate(req.body);
     const { emailId, password } = req.body;
     req.body.password = await bcrypt.hash(password, 10);
-    const user  = await User.create(req.body);
+    req.body.role = "admin";
+    const user = await User.create(req.body);
     const token = jwt.sign(
       { _id: user._id, emailId, role: user.role },
       process.env.JWT_KEY,
       { expiresIn: 60 * 60 },
     );
-    res.cookie("token", token, { maxAge: 60 * 60 * 1000, httpOnly: true });
+    res.cookie("token", token, cookieOptions);
     res.status(201).json({ message: "Admin Registered Successfully" });
   } catch (err) {
     res.status(400).json({ error: "Error: " + err.message });
@@ -196,31 +181,69 @@ const deleteProfile = async (req, res) => {
 // ── Update Profile ─────────────────────────────────────────────────
 const updateProfile = async (req, res) => {
   try {
+    if (!req.result || !req.result._id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     const userId = req.result._id;
+
     const allowedFields = [
-      "firstName","lastName","age","profileImage","gender","location",
-      "birthday","website","github","linkedin","twitter","readme",
-      "work","education","skills","showRecentAC","showHeatmap",
+      "firstName",
+      "lastName",
+      "age",
+      "profileImage",
+      "gender",
+      "location",
+      "birthday",
+      "website",
+      "github",
+      "linkedin",
+      "twitter",
+      "readme",
+      "work",
+      "education",
+      "skills",
+      "showRecentAC",
+      "showHeatmap",
     ];
+
     const updateData = {};
     allowedFields.forEach((field) => {
-      if (req.body[field] !== undefined) updateData[field] = req.body[field];
+      if (req.body[field] !== undefined) {
+        updateData[field] = req.body[field];
+      }
     });
+
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $set: updateData },
       { new: true, runValidators: true },
     ).select("-password");
 
-    if (!updatedUser) return res.status(404).json({ message: "User not found" });
-    return res.status(200).json({ message: "Profile updated successfully", user: buildUserReply(updatedUser) });
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (error) {
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 
 module.exports = {
-  register, login, logout,
-  oauthCallback, checkAuth,
-  adminRegister, deleteProfile, updateProfile,exchangeOAuthCode
+  register,
+  login,
+  logout,
+  oauthCallback,
+  checkAuth,
+  adminRegister,
+  deleteProfile,
+  updateProfile,
+  exchangeOAuthCode,
 };

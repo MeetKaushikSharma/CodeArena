@@ -1,151 +1,126 @@
 # CodeArena
 
-CodeArena is a full-stack coding practice platform focused on real problem solving, fast feedback, and a clean competitive programming workflow.
+CodeArena is a modern, full-stack, competitive programming and interview preparation platform. It provides a seamless, fast, and interactive environment for developers to solve Data Structures and Algorithms (DSA) problems, get AI-powered hints, and track their progress on a global leaderboard.
 
-## Live Demo
+## 🚀 Live Demo
+**Try it out:** [https://code-arena-army.vercel.app/](https://code-arena-army.vercel.app/)
 
-**Try it here:** [https://code-arena-army.vercel.app/](https://code-arena-army.vercel.app/)
+## ✨ Key Features
 
-## What this project does
+- **Robust Problem Solving Environment:**
+  - Integrated Monaco Editor (VS Code's editor) for a premium coding experience.
+  - Multi-language support executed reliably via Judge1.
+  - Real-time compilation and execution against visible and hidden test cases.
+- **AI-Powered Learning (Powered by Google Gemini):**
+  - Context-aware AI assistant scopes its help directly to the problem at hand.
+  - Get hints, debugging assistance, or conceptual explanations without leaving the editor.
+- **Competitive & Social:**
+  - Weighted difficulty-based scoring system.
+  - Paginated global leaderboard.
+  - Profile dashboard with activity tracking and streaks.
+- **Comprehensive Admin Panel:**
+  - Secure, role-based admin dashboard to create, update, and manage problems.
+  - Integrated Cloudinary video solution uploads via secure signed URLs.
+- **Production-Ready Security:**
+  - JWT authentication with HTTP-only, secure cookies.
+  - Express global error handling and request payload limits.
+  - Redis-backed submission rate limiting to prevent abuse.
 
-- Lets users solve DSA problems with a Monaco-based in-browser editor.
-- Executes and validates submissions against hidden test cases.
-- Supports AI-guided help for problem understanding and debugging.
-- Tracks solved problems, submissions, and leaderboard ranking.
-- Provides an admin workflow for creating/updating problems and managing video solutions.
+## 🏗 Architecture & Tech Stack
 
-## Key architecture note (important)
-
-This project now uses **Judge1 for all languages**.  
-There is **no Judge0 execution path** in the current implementation.
-
-## Feature summary
-
-- Authentication with JWT + HTTP-only cookies + role-based access (`user`, `admin`)
-- Problem lifecycle: create, update, delete, fetch, and solve tracking
-- Run code on visible cases and submit on hidden cases
-- Submission cooldown (Redis-backed, 10s)
-- Weighted leaderboard (difficulty-aware scoring)
-- AI chat assistant (Google Gemini) scoped to the current problem
-- Video solution management via Cloudinary signed uploads
-- Profile dashboard with activity-focused user data
-
-## Tech stack
-
-### Backend (`CodeArena_Backend`)
-
-- Node.js + Express
-- MongoDB (Mongoose)
-- Redis
-- Axios (Judge1 integration)
-- JWT + bcrypt
-- Google GenAI SDK (`@google/genai`)
-- Cloudinary
+This project is structured as a monorepo containing a distinct backend and frontend.
 
 ### Frontend (`CodeArena_Frontend`)
+- **Framework:** React + Vite
+- **State Management:** Redux Toolkit
+- **Styling:** Tailwind CSS + DaisyUI
+- **Routing:** React Router
+- **Editor:** `@monaco-editor/react`
+- **Forms & Validation:** React Hook Form + Zod
 
-- React + Vite
-- Redux Toolkit
-- React Router
-- Monaco Editor (`@monaco-editor/react`)
-- Tailwind CSS + DaisyUI
-- React Hook Form + Zod
+### Backend (`CodeArena_Backend`)
+- **Runtime:** Node.js + Express
+- **Database:** MongoDB (Mongoose)
+- **Caching & Rate Limiting:** Redis
+- **Authentication:** JWT + bcrypt + Passport.js
+- **External Integrations:** 
+  - Axios (Judge1 API for code execution)
+  - `@google/genai` (Google Gemini for AI chat)
+  - Cloudinary (Video hosting)
 
-## Monorepo structure
+> **Important Architecture Note:**  
+> The backend exclusively relies on **Judge1** for all remote code execution. Ensure the `JUDGE1_HOST` is correctly configured in your environment variables.
 
-```text
-CodeArena/
-├── CodeArena_Backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── utils/
-│   │   └── index.js
-│   └── package.json
-├── CodeArena_Frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── store/
-│   │   └── App.jsx
-│   └── package.json
-└── README.md
-```
+## 🛠 Local Setup
 
-## Backend API surface (high-level)
-
-- `/user` — register, login, logout, auth check, profile update
-- `/problem` — create/update/delete problems, fetch lists/details, solved/submitted views
-- `/submission` — run and submit code
-- `/leaderboard` — ranked users
-- `/ai` — contextual AI help for current problem
-- `/video` — admin video upload metadata/signature management
-
-## Local setup
-
-### 1) Clone and install
+### 1. Clone and Install Dependencies
 
 ```bash
 git clone <your-repo-url>
 cd CodeArena
-cd CodeArena_Backend && npm install
-cd ..\CodeArena_Frontend && npm install
+
+# Install Backend Dependencies
+cd CodeArena_Backend
+npm install
+
+# Install Frontend Dependencies
+cd ../CodeArena_Frontend
+npm install
 ```
 
-### 2) Configure environment
+### 2. Environment Configuration
 
-Create `.env` for backend with keys similar to:
+#### Backend (`CodeArena_Backend/.env`)
+Create a `.env` file in the `CodeArena_Backend` directory. See the provided `.env.example` for reference:
 
 ```env
 PORT=3000
 FRONTEND_URL=http://localhost:5173
 
-DB_CONNECT_STRING=...
-REDIS_HOST=...
-REDIS_PASS=...
-JWT_KEY=...
+# Database & Cache
+DB_CONNECT_STRING=mongodb+srv://<user>:<password>@cluster.mongodb.net/codearena
+REDIS_HOST=redis://<user>:<password>@<host>:<port>
+REDIS_PASS=<your_redis_password>
 
-JUDGE1_HOST=...
-GEMINI_KEY=...
+# Security
+JWT_KEY=<your_jwt_secret>
 
-CLOUDINARY_CLOUD_NAME=...
-CLOUDINARY_API_KEY=...
-CLOUDINARY_API_SECRET=...
+# External APIs
+JUDGE1_HOST=<your_judge1_api_url>
+GEMINI_KEY=<your_gemini_api_key>
+
+# Cloudinary (Admin Video Uploads)
+CLOUDINARY_CLOUD_NAME=<your_cloud_name>
+CLOUDINARY_API_KEY=<your_api_key>
+CLOUDINARY_API_SECRET=<your_api_secret>
 ```
 
-Create frontend `.env`:
+#### Frontend (`CodeArena_Frontend/.env`)
+Create a `.env` file in the `CodeArena_Frontend` directory:
 
 ```env
 VITE_API_URL=http://localhost:3000
 ```
 
-### 3) Run
+### 3. Run the Development Servers
 
-Backend:
-
+**Start the Backend:**
 ```bash
 cd CodeArena_Backend
-npm start
+npm run dev
 ```
 
-Frontend:
-
+**Start the Frontend:**
 ```bash
 cd CodeArena_Frontend
 npm run dev
 ```
 
-## Rough notes and build journey
+## 🔐 Security & Production Considerations
 
-The repository includes `Rough-Notes-During-Building-CodeArena.pdf`, which captures rough sketches and early thinking used during development.  
-This README is the clean, production-facing source of truth for contributors and readers.
+- **CORS & Cookies:** The backend is configured to accept cross-origin requests from the exact `FRONTEND_URL`. Cookies use `sameSite: "none"` and `secure: true` for production compatibility.
+- **Admin Access:** Registration strictly forces new users to the `user` role. The `admin` role must be manually assigned directly via the MongoDB database for security.
+- **Rate Limiting:** A Redis-backed 10-second cooldown is enforced on code submissions.
 
-## Current status
-
-- Active full-stack implementation with auth, problem solving, AI support, and leaderboard
-- Judge1-only execution model in place
-- Demo deployed and publicly accessible
-
----
+## 📜 License
+This project is proprietary and intended for demonstration and portfolio purposes.

@@ -232,13 +232,17 @@ export default function Leaderboard() {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [myRank, setMyRank] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const load = async () => {
+      setLoading(true);
       try {
-        const res = await axiosClient.get("/leaderboard");
-        const data = (res.data || []).map((u, i) => ({ ...u, rank: i + 1 }));
+        const res = await axiosClient.get(`/leaderboard?page=${page}&limit=50`);
+        const data = (res.data.data || []).map((u, i) => ({ ...u, rank: (page - 1) * 50 + i + 1 }));
         setUsers(data);
+        setTotalPages(res.data.pagination?.pages || 1);
         const me = data.find((u) => u._id === currentUser?._id);
         if (me) setMyRank(me.rank);
       } catch (err) {
@@ -271,7 +275,7 @@ export default function Leaderboard() {
       }
     };
     load();
-  }, [currentUser?._id]);
+  }, [currentUser?._id, page]);
 
   const maxSolved = users[0]?.solved || 1;
 
@@ -949,6 +953,37 @@ export default function Leaderboard() {
           </div>
         )}
 
+        {/* ── PAGINATION ── */}
+        {totalPages > 1 && (
+          <div style={{ display: "flex", justifyContent: "center", gap: 12, marginTop: 32 }}>
+            <button
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              style={{
+                background: "#0e0e18", color: "#e2e8f0", border: "1px solid #2a2a44",
+                padding: "8px 16px", borderRadius: 8, cursor: page === 1 ? "not-allowed" : "pointer",
+                opacity: page === 1 ? 0.5 : 1
+              }}
+            >
+              Previous
+            </button>
+            <span style={{ display: "flex", alignItems: "center", fontFamily: "'Montserrat', monospace", fontSize: 14 }}>
+              Page {page} of {totalPages}
+            </span>
+            <button
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              style={{
+                background: "#0e0e18", color: "#e2e8f0", border: "1px solid #2a2a44",
+                padding: "8px 16px", borderRadius: 8, cursor: page === totalPages ? "not-allowed" : "pointer",
+                opacity: page === totalPages ? 0.5 : 1
+              }}
+            >
+              Next
+            </button>
+          </div>
+        )}
+
         <div
           style={{
             marginTop: 48,
@@ -964,7 +999,7 @@ export default function Leaderboard() {
               color: "#333355",
             }}
           >
-            Rankings update in real-time · LEETGRIND ·{" "}
+            Rankings update in real-time · CodeArena ·{" "}
             {new Date().getFullYear()}
           </span>
         </div>

@@ -16,12 +16,12 @@ const adminMiddleware = async (req, res, next) => {
     }
     const result = await User.findById(_id);
 
-    if (payload.role != "admin") {
-      throw new Error("You are not a admin");
-    }
-
     if (!result) {
       throw new Error("Admin doesn't exists");
+    }
+
+    if (result.role !== "admin") {
+      throw new Error("You are not a admin");
     }
 
     // Redis ke Blocklist mai present toh nahi hai?
@@ -35,7 +35,7 @@ const adminMiddleware = async (req, res, next) => {
 
     next();
   } catch (err) {
-    res.status(401).send("Error:" + err.message);
+    res.status(401).json({ error: err.message });
   }
 };
 

@@ -16,6 +16,7 @@ import UpdateProblem from "./components/Updateproblem";
 import ProfileDashboard from "./pages/ProfileDashboard";
 import Leaderboard from "./pages/Leaderboard";
 import OAuthSuccess from "./pages/OAuthSuccess";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,7 +64,10 @@ function App() {
         />
 
         {/* ── Problems ── */}
-        <Route path="/problem/:problemId" element={<ProblemPage />} />
+        <Route
+          path="/problem/:problemId"
+          element={isAuthenticated ? <ProblemPage /> : <Navigate to="/login" />}
+        />
 
         {/* ── Admin (role-guarded) ── */}
         <Route
@@ -116,9 +120,30 @@ function App() {
             )
           }
         />
-        <Route path="/admin/update" element={<ProblemListForUpdate />} />
-        <Route path="/admin/update/:id" element={<UpdateProblem />} />
+        <Route
+          path="/admin/update"
+          element={
+            isAuthenticated && user?.role === "admin" ? (
+              <ProblemListForUpdate />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/admin/update/:id"
+          element={
+            isAuthenticated && user?.role === "admin" ? (
+              <UpdateProblem />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
         <Route path="/oauth/success" element={<OAuthSuccess />} />
+        
+        {/* ── 404 Not Found ── */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

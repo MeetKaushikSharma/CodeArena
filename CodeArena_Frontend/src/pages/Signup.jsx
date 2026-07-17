@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router";
-import { registerUser } from "../authSlice";
+import { registerUser, clearError } from "../authSlice";
 import OAuthButtons from "../components/OAuthButtons";
 import { useEffect, useState } from "react";
 import {
@@ -70,6 +70,10 @@ export default function Signup() {
   useEffect(() => {
     if (isAuthenticated) navigate("/");
   }, [isAuthenticated, navigate]);
+
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
 
   const onSubmit = (data) => dispatch(registerUser(data));
 

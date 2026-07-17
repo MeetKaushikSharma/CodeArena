@@ -86,7 +86,7 @@ When the user asks for a full solution, structure the response EXACTLY as follow
       });
       res.status(201).json({ message: response.text });
     }
-    main();
+    await main();
   } catch (err) {
     res.status(500).json({ message: "Internal Server during solveDoubt" });
   }
